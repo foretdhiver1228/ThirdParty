@@ -17,10 +17,10 @@ public class MainController {
     @Autowired
     private MainService mainService;
 
-//    @GetMapping("get-test")
-//    public String getApi(@RequestParam("name") String name) {
-//        return name;
-//    }
+    @GetMapping("/selectList")
+    public List<Map<String, Object>> getListsById(@RequestParam Map<String, Object> param) {
+        return mainService.getListsById(param);
+    }
 
     @PostMapping("/post-test")
     public ResponseEntity<List<Map<String, Object>>> getTestData(@RequestBody String id) {
@@ -32,9 +32,9 @@ public class MainController {
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/selectList")
-    public List<Map<String, Object>> getListsById(@RequestBody Map<String, Object> param) {
-        return mainService.getListsById(param);
-    }
+//    @PostMapping("/selectList")
+//    public List<Map<String, Object>> getListsById(@RequestBody Map<String, Object> param) {
+//        return mainService.getListsById(param);
+//    }
 
 }

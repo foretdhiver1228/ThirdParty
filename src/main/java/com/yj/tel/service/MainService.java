@@ -1,6 +1,7 @@
 package com.yj.tel.service;
 
 import com.yj.tel.mapper.MainMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Map;
 @Service
 public class MainService {
 
+    @Autowired
     private MainMapper mainMapper;
 
     public List<Map<String, Object>> getListsById(Map<String, Object> param) {
