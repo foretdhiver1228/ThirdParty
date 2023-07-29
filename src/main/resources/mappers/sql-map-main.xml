@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yj.tel.mapper.MainMapper">
+    <select id="selectListsById" resultType="java.util.HashMap" parameterType="java.util.Map">
+        select *
+          from logistics_system.ls_Transporter
+        <where>
+            <if test="trsp_id != null and trsp_id != ''">
+                AND trsp_id = #{trsp_id}
+            </if>
+            <if test="age != null">
+                AND age = #{age}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAllLists" resultType="java.util.HashMap" parameterType="java.util.Map">
+        select *
+        from logistics_system.ls_Transporter
+    </select>
+</mapper>

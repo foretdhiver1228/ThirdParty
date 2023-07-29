@@ -1,5 +1,6 @@
 package com.yj.tel.controller;
 
+import com.yj.tel.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +14,16 @@ public class MainController {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private MainService mainService;
 
 //    @GetMapping("get-test")
 //    public String getApi(@RequestParam("name") String name) {
 //        return name;
 //    }
 
-    @PostMapping("post-test")
-    public ResponseEntity<List<Map<String, Object>>> getTestData(@RequestBody String person) {
+    @PostMapping("/post-test")
+    public ResponseEntity<List<Map<String, Object>>> getTestData(@RequestBody String id) {
         // logistics_system.ls_Customer 조회 쿼리 실행
         String sql = "select * from logistics_system.ls_Transporter";
         List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
@@ -29,8 +32,9 @@ public class MainController {
         return ResponseEntity.ok(result);
     }
 
-//    @PostMapping("post-test")
-//    public ResponseEntity<String> processData(@RequestBody String person) {
-//        return ResponseEntity.ok(person);
-//    }
+    @PostMapping("/selectList")
+    public List<Map<String, Object>> getListsById(@RequestBody Map<String, Object> param) {
+        return mainService.getListsById(param);
+    }
+
 }
