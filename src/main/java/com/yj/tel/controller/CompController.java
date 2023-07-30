@@ -49,4 +49,39 @@ public class CompController {
         compService.deleteComp(param); //
         return new ResponseEntity<>("배상정보 삭제 성공", HttpStatus.CREATED);
     }
+
+    /**
+     * 배상정보코드 조회
+     * */
+    @GetMapping("/compcode")
+    public List<Map<String, Object>> getCompCode(@RequestParam Map<String, Object> param) {
+        return compService.selectCompCode(param);
+    }
+
+    /**
+     * 배상정보코드 등록
+     * */
+    @PostMapping("/compcode")
+    public ResponseEntity<String> postCompCode(@RequestBody Map<String, Object> param) {
+        compService.insertCompCode(param); //
+        return new ResponseEntity<>("배상정보코드 등록 성공", HttpStatus.CREATED);
+    }
+
+    /**
+     * 배상정보코드 수정
+     * */
+    @PutMapping("/compcode")
+    public ResponseEntity<String> putCompCode(@RequestBody Map<String, Object> param) {
+        compService.updateCompCode(param); //
+        return new ResponseEntity<>("배상정보코드 수정 성공", HttpStatus.CREATED);
+    }
+
+    /**
+     * 배상정보코드 삭제
+     * */
+    @DeleteMapping("/compcode")
+    public ResponseEntity<String> deleteCompCode(@RequestBody Map<String, Object> param) {
+        compService.deleteCompCode(param); //
+        return new ResponseEntity<>("배상정보코드 삭제 성공", HttpStatus.CREATED);
+    }
 }

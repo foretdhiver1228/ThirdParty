@@ -65,4 +65,81 @@
         WHERE voc_id = #{voc_id}
           AND comp_id = #{comp_id}
     </delete>
+
+    <select id="selectCompCode" resultType="java.util.HashMap" parameterType="java.util.Map">
+        /* 배상정보코드 조회 :: selectCompCode */
+        SELECT code
+             , code_nm
+             , comp_nm
+             , comp_dtl
+             , refer_1
+             , refer_2
+             , refer_3
+             , refer_4
+             , refer_5
+        FROM logistics_system.ls_CompensationCode
+    </select>
+
+    <insert id="insertCompCode" parameterType="java.util.Map">
+        /* 배상정보코드 등록 :: insertCompCode */
+        INSERT INTO logistics_system.ls_CompensationCode
+            (code_nm
+            , comp_nm
+            , comp_dtl
+            , refer_1
+            , refer_2
+            , refer_3
+            , refer_4
+            , refer_5
+            )
+        VALUES
+            (#{code_nm}
+            , #{comp_nm}
+            , #{comp_dtl}
+            , #{refer_1}
+            , #{refer_2}
+            , #{refer_3}
+            , #{refer_4}
+            , #{refer_5}
+            )
+    </insert>
+
+
+    <update id="updateCompCode" parameterType="java.util.Map">
+        /* 배상정보코드 수정 :: updateCompCode */
+        UPDATE logistics_system.ls_CompensationCode
+        <set>
+            <if test="code_nm != null and code_nm != ''">
+                code_nm = #{code_nm},
+            </if>
+            <if test="comp_nm != null and comp_nm != ''">
+                comp_nm = #{comp_nm},
+            </if>
+            <if test="comp_dtl != null and comp_dtl != ''">
+                comp_dtl = #{comp_dtl},
+            </if>
+            <if test="refer_1 != null and refer_1 != ''">
+                refer_1 = #{refer_1},
+            </if>
+            <if test="refer_2 != null and refer_2 != ''">
+                refer_2 = #{refer_2},
+            </if>
+            <if test="refer_3 != null and refer_3 != ''">
+                refer_3 = #{refer_3},
+            </if>
+            <if test="refer_4 != null and refer_4 != ''">
+                refer_4 = #{refer_4},
+            </if>
+            <if test="refer_5 != null and refer_5 != ''">
+                refer_5 = #{refer_5}
+            </if>
+        </set>
+        WHERE code = #{code}
+    </update>
+
+    <delete id="deleteCompCode" parameterType="java.util.Map">
+        /* 배상정보코드 삭제 :: deleteCompCode */
+        DELETE FROM logistics_system.ls_CompensationCode
+        WHERE code = #{code}
+    </delete>
 </mapper>
