@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yj.tel.mapper.CompMapper">
+
+    <select id="selectComp" resultType="java.util.HashMap" parameterType="java.util.Map">
+        /* 배상정보 조회 :: selectComp */
+        SELECT A.comp_id
+             , A.voc_id
+             , A.code
+             , B.code_nm
+             , B.comp_nm
+             , B.comp_dtl
+             , B.refer_1
+             , B.refer_2
+             , B.refer_3
+             , B.refer_4
+             , B.refer_5
+        FROM logistics_system.ls_Compensation A
+        LEFT OUTER JOIN logistics_system.ls_CompensationCode B
+                    ON A.code = B.code
+        <where>
+            <if test="voc_id != null and voc_id != ''">
+                AND voc_id = #{voc_id}
+            </if>
+            <if test="comp_id != null and comp_id != ''">
+                AND comp_id = #{comp_id}
+            </if>
+            <if test="code != null and code != ''">
+                AND code = #{code}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertComp" parameterType="java.util.Map">
+        /* 배상정보 등록 :: insertComp */
+        INSERT INTO logistics_system.ls_Compensation
+            (
+            voc_id
+            , code
+            )
+        VALUES
+            (
+             #{voc_id}
+            , #{code}
+            )
+    </insert>
+
+    <update id="updateComp" parameterType="java.util.Map">
+        /* 배상정보 수정 :: updateComp */
+        UPDATE logistics_system.ls_Compensation
+        <set>
+            <if test="code != null and code != ''">
+                code = #{code}
+            </if>
+        </set>
+        WHERE voc_id = #{voc_id}
+          AND comp_id = #{comp_id}
+    </update>
+
+    <delete id="deleteComp" parameterType="java.util.Map">
+        /* 배상정보 삭제 :: deleteComp */
+        DELETE FROM logistics_system.ls_Compensation
+        WHERE voc_id = #{voc_id}
+          AND comp_id = #{comp_id}
+    </delete>
+</mapper>
