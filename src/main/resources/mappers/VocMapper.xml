@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.yj.tel.mapper.MainMapper">
+<mapper namespace="com.yj.tel.mapper.VocMapper">
 
     <select id="selectVoc" resultType="java.util.HashMap" parameterType="java.util.Map">
         /* VOC 조회 :: selectVoc */
