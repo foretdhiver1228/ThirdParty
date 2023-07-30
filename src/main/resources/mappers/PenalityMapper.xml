@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yj.tel.mapper.PenalityMapper">
+
+    <select id="selectPenality" resultType="java.util.HashMap" parameterType="java.util.Map">
+        /* 패널티 조회 :: selectPenality */
+        SELECT penality_id
+             , voc_id
+             , penality_amt
+             , driver_chk_yn
+        FROM logistics_system.ls_Penality
+        <where>
+            <if test="penality_id != null and penality_id != ''">
+                AND penality_id = #{penality_id}
+            </if>
+            <if test="voc_id != null and voc_id != ''">
+                AND voc_id = #{voc_id}
+            </if>
+            <if test="driver_chk_yn != null and driver_chk_yn != ''">
+                AND driver_chk_yn = #{driver_chk_yn}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertPenality" parameterType="java.util.Map">
+        /* 패널티 등록 :: insertPenality */
+        INSERT INTO logistics_system.ls_Penality
+            (
+             voc_id
+             , penality_amt
+             , driver_chk_yn
+             )
+        VALUES
+            (
+             #{voc_id}
+            , #{penality_amt}
+            , #{driver_chk_yn}
+            )
+    </insert>
+
+    <update id="updatePenality" parameterType="java.util.Map">
+        /* 패널티 수정 :: updatePenality */
+        UPDATE logistics_system.ls_Penality
+        <set>
+            <if test="voc_id != null and voc_id != ''">
+                voc_id = #{voc_id},
+            </if>
+            <if test="penality_amt != null and penality_amt != ''">
+                penality_amt = #{penality_amt},
+            </if>
+            <if test="driver_chk_yn != null and driver_chk_yn != ''">
+                driver_chk_yn = #{driver_chk_yn}
+            </if>
+        </set>
+        WHERE penality_id = #{penality_id}
+    </update>
+
+    <delete id="deletePenality" parameterType="java.util.Map">
+        /* 패널티 삭제 :: deletePenality */
+        DELETE FROM logistics_system.ls_Penality
+        WHERE penality_id = #{penality_id}
+    </delete>
+</mapper>
