@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yj.tel.mapper.TrspMapper">
+
+    <select id="selectTrsp" resultType="java.util.HashMap" parameterType="java.util.Map">
+        /* 운송사 조회 :: selectTrsp */
+        SELECT trsp_id
+             , trsp_nm
+             , other_info
+        FROM logistics_system.ls_Transporter
+        <where>
+            <if test="trsp_id != null and trsp_id != ''">
+                AND trsp_id = #{trsp_id}
+            </if>
+            <if test="trsp_nm != null and trsp_nm != ''">
+                AND trsp_nm = #{trsp_nm}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertTrsp" parameterType="java.util.Map">
+        /* 운송사 등록 :: insertTrsp */
+        INSERT INTO logistics_system.ls_Transporter
+            (
+             trsp_nm
+             , other_info
+             )
+        VALUES
+            (
+             #{trsp_nm}
+            , #{other_info}
+             )
+    </insert>
+
+    <update id="updateTrsp" parameterType="java.util.Map">
+        /* 운송사 수정 :: updateTrsp */
+        UPDATE logistics_system.ls_Transporter
+        <set>
+            <if test="trsp_nm != null and trsp_nm != ''">
+                trsp_nm = #{trsp_nm},
+            </if>
+            <if test="other_info != null and other_info != ''">
+                other_info = #{other_info}
+            </if>
+        </set>
+        WHERE trsp_id = #{trsp_id}
+    </update>
+
+    <delete id="deleteTrsp" parameterType="java.util.Map">
+        /* 운송사 삭제 :: deleteTrsp */
+        DELETE FROM logistics_system.ls_Transporter
+        WHERE trsp_id = #{trsp_id}
+    </delete>
+</mapper>
