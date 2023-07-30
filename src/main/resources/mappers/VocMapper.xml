@@ -18,6 +18,18 @@
             <if test="voc_id != null and voc_id != ''">
                 AND voc_id = #{voc_id}
             </if>
+            <if test="resp_pty != null and resp_pty != ''">
+                AND resp_pty = #{resp_pty}
+            </if>
+            <if test="comp_doen_yn != null and comp_doen_yn != ''">
+                AND comp_doen_yn = #{comp_doen_yn}
+            </if>
+            <if test="cust_co_id != null and cust_co_id != ''">
+                AND cust_co_id = #{cust_co_id}
+            </if>
+            <if test="trsp_id != null and trsp_id != ''">
+                AND trsp_id = #{trsp_id}
+            </if>
         </where>
     </select>
 
@@ -46,12 +58,26 @@
     <update id="updateVoc" parameterType="java.util.Map">
         /* VOC 수정 :: updateVoc */
         UPDATE logistics_system.ls_VOC
-        SET content = #{content}
-          , resp_pty = #{resp_pty}
-          , comp_doen_yn = #{comp_doen_yn}
-          , dispute_raised_yn = #{dispute_raised_yn}
-          , cust_co_id = #{cust_co_id}
-          , trsp_id = #{trsp_id}
+        <set>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="resp_pty != null and resp_pty != ''">
+                resp_pty = #{resp_pty},
+            </if>
+            <if test="comp_doen_yn != null and comp_doen_yn != ''">
+                comp_doen_yn = #{comp_doen_yn},
+            </if>
+            <if test="dispute_raised_yn != null and dispute_raised_yn != ''">
+                dispute_raised_yn = #{dispute_raised_yn},
+            </if>
+            <if test="cust_co_id != null and cust_co_id != ''">
+                cust_co_id = #{cust_co_id},
+            </if>
+            <if test="trsp_id != null and trsp_id != ''">
+                trsp_id = #{trsp_id}
+            </if>
+        </set>
         WHERE voc_id = #{voc_id}
 
     </update>

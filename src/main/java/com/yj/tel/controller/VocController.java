@@ -14,8 +14,6 @@ import java.util.Map;
 public class VocController {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-    @Autowired
     private VocService vocService;
 
     /**
@@ -52,26 +50,4 @@ public class VocController {
         vocService.deleteVoc(param); //
         return new ResponseEntity<>("VOC 삭제 성공", HttpStatus.CREATED);
     }
-
-
-
-
-
-
-
-    @PostMapping("/post-test")
-    public ResponseEntity<List<Map<String, Object>>> getTestData(@RequestBody String id) {
-        // logistics_system.ls_Customer 조회 쿼리 실행
-        String sql = "select * from logistics_system.ls_Transporter";
-        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
-
-        // 조회 결과 반환
-        return ResponseEntity.ok(result);
-    }
-
-//    @PostMapping("/selectList")
-//    public List<Map<String, Object>> getListsById(@RequestBody Map<String, Object> param) {
-//        return mainService.getListsById(param);
-//    }
-
 }
