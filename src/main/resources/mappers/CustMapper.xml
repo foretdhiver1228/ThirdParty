@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yj.tel.mapper.CustMapper">
+
+    <select id="selectCust" resultType="java.util.HashMap" parameterType="java.util.Map">
+        /* 고객사 조회 :: selectCust */
+        SELECT cust_co_id
+             , cust_co_nm
+             , other_info
+        FROM logistics_system.ls_Customer
+        <where>
+            <if test="cust_co_id != null and cust_co_id != ''">
+                AND cust_co_id = #{cust_co_id}
+            </if>
+            <if test="cust_co_nm != null and cust_co_nm != ''">
+                AND cust_co_nm = #{cust_co_nm}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertCust" parameterType="java.util.Map">
+        /* 고객사 등록 :: insertCust */
+        INSERT INTO logistics_system.ls_Customer
+            (
+             cust_co_nm
+             , other_info
+             )
+        VALUES
+            (
+             #{cust_co_nm}
+             , #{other_info}
+             )
+    </insert>
+
+    <update id="updateCust" parameterType="java.util.Map">
+        /* 고객사 수정 :: updateCust */
+        UPDATE logistics_system.ls_Customer
+        <set>
+            <if test="cust_co_nm != null and cust_co_nm != ''">
+                cust_co_nm = #{cust_co_nm},
+            </if>
+            <if test="other_info != null and other_info != ''">
+                other_info = #{other_info}
+            </if>
+        </set>
+        WHERE cust_co_id = #{cust_co_id}
+    </update>
+
+    <delete id="deleteCust" parameterType="java.util.Map">
+        /* 고객사 삭제 :: deleteCust */
+        DELETE FROM logistics_system.ls_Customer
+        WHERE cust_co_id = #{cust_co_id}
+    </delete>
+</mapper>
