@@ -3,21 +3,62 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yj.tel.mapper.MainMapper">
-    <select id="selectListsById" resultType="java.util.HashMap" parameterType="java.util.Map">
-        select *
-          from logistics_system.ls_Transporter
+
+    <select id="selectVoc" resultType="java.util.HashMap" parameterType="java.util.Map">
+        /* VOC 조회 :: selectVoc */
+        SELECT voc_id
+             , content
+             , resp_pty
+             , comp_doen_yn
+             , dispute_raised_yn
+             , cust_co_id
+             , trsp_id
+        FROM logistics_system.ls_VOC
         <where>
-            <if test="trsp_id != null and trsp_id != ''">
-                AND trsp_id = #{trsp_id}
-            </if>
-            <if test="age != null">
-                AND age = #{age}
+            <if test="voc_id != null and voc_id != ''">
+                AND voc_id = #{voc_id}
             </if>
         </where>
     </select>
 
-    <select id="selectAllLists" resultType="java.util.HashMap" parameterType="java.util.Map">
-        select *
-        from logistics_system.ls_Transporter
-    </select>
+    <insert id="insertVoc" parameterType="java.util.Map">
+        /* VOC 등록 :: insertVoc */
+        INSERT INTO logistics_system.ls_VOC
+            (
+             content
+            , resp_pty
+            , comp_doen_yn
+            , dispute_raised_yn
+            , cust_co_id
+            , trsp_id
+            )
+        VALUES
+            (
+             #{content}
+            , #{resp_pty}
+            , #{comp_doen_yn}
+            , #{dispute_raised_yn}
+            , #{cust_co_id}
+            , #{trsp_id}
+            )
+    </insert>
+
+    <update id="updateVoc" parameterType="java.util.Map">
+        /* VOC 수정 :: updateVoc */
+        UPDATE logistics_system.ls_VOC
+        SET content = #{content}
+          , resp_pty = #{resp_pty}
+          , comp_doen_yn = #{comp_doen_yn}
+          , dispute_raised_yn = #{dispute_raised_yn}
+          , cust_co_id = #{cust_co_id}
+          , trsp_id = #{trsp_id}
+        WHERE voc_id = #{voc_id}
+
+    </update>
+
+    <delete id="deleteVoc" parameterType="java.util.Map">
+        /* VOC 삭제 :: deleteVoc */
+        DELETE FROM logistics_system.ls_VOC
+        WHERE voc_id = #{voc_id}
+    </delete>
 </mapper>

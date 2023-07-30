@@ -13,14 +13,32 @@ public class MainService {
     @Autowired
     private MainMapper mainMapper;
 
-    public List<Map<String, Object>> getListsById(Map<String, Object> param) {
-        if (param == null) {
-            // trsp_id가 null인 경우, 전체 데이터를 조회하도록 처리
-            return mainMapper.selectAllLists();
-        } else {
-            // trsp_id가 null이 아닌 경우, 조건에 맞는 데이터를 조회
-            return mainMapper.selectListsById(param);
-        }
+    /**
+     * VOC 조회
+     * */
+    public List<Map<String, Object>> selectVoc(Map<String, Object> param) {
+        return mainMapper.selectVoc(param);
+    }
+
+    /**
+     * VOC 등록
+     * */
+    public void insertVoc(Map<String, Object> param) {
+        mainMapper.insertVoc(param);
+    }
+
+    /**
+     * VOC 수정
+     * */
+    public void updateVoc(Map<String, Object> param) {
+        mainMapper.updateVoc(param);
+    }
+
+    /**
+     * VOC 삭제
+     * */
+    public void deleteVoc(Map<String, Object> param) {
+        mainMapper.deleteVoc(param);
     }
 
 }

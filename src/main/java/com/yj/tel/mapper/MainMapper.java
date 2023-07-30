@@ -1,5 +1,6 @@
 package com.yj.tel.mapper;
 
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -7,7 +8,9 @@ import java.util.Map;
 
 @Mapper
 public interface MainMapper {
-    public List<Map<String, Object>> selectListsById(Map<String, Object> param);
-    public List<Map<String, Object>> selectAllLists();
 
+    public List<Map<String, Object>> selectVoc(Map<String, Object> param);
+    public void insertVoc(Map<String, Object> param);
+    public void updateVoc(Map<String, Object> param);
+    public void deleteVoc(Map<String, Object> param);
 }
