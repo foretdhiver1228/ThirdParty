@@ -41,6 +41,7 @@ public class VocService {
     public void deleteVoc(Map<String, Object> param) {
         // voc_id 사용중인 데이터 개수가 0일 때만 삭제
         if (vocMapper.selectVocUseAt(param).isEmpty()) {
+            System.out.println("service-if");
             vocMapper.deleteVoc(param);
         } else {
             throw new RuntimeException("사용중인 vocId는 삭제 불가능합니다.");

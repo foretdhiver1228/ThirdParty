@@ -97,7 +97,7 @@
 
     <update id="updateVoc" parameterType="java.util.Map">
         /* VOC 수정 :: updateVoc */
-        UPDATE ls_VOC
+        UPDATE tp_VOC
         <set>
             <if test="trsp_id != null and trsp_id != ''">
                 trsp_id = #{trsp_id},

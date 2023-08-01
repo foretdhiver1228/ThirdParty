@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 import java.util.Map;
@@ -49,7 +48,7 @@ public class VocController {
     public ResponseEntity<String> deleteVoc(@RequestBody Map<String, Object> param) {
         String vocId = "";
         vocId = param.get("voc_id").toString();
-
+        System.out.println(vocId);
         try {
             vocService.deleteVoc(param); //
             return ResponseEntity.ok("vocId : " + vocId + " 가 성공적으로 삭제되었습니다.");
