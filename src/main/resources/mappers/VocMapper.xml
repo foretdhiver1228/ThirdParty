@@ -15,6 +15,7 @@
           , A.atc_amt
           , A.rl_dlvy_de
           , A.dlvy_prearnge_de
+          , A.comp_reqst_yn  /* 배상요청여부  */
           , A.resp_pty    /* 귀책당사 */
           , A.first_regist_dt  as voc_regist_dt
           , B.penality_id	/* 패널티_아이디 */
@@ -50,6 +51,9 @@
             <if test="comp_doen_yn != null and comp_doen_yn != ''">
                 AND C.comp_doen_yn = #{comp_doen_yn}
             </if>
+            <if test="comp_reqst_yn != null and comp_reqst_yn != ''">
+                AND B.comp_reqst_yn = #{comp_reqst_yn}
+            </if>
             <if test="cust_co_id != null and cust_co_id != ''">
                 AND B.cust_co_id = #{cust_co_id}
             </if>
@@ -70,6 +74,7 @@
         , atc_amt
         , rl_dlvy_de
         , dlvy_prearnge_de
+        , comp_reqst_yn
         , resp_pty
         , first_regist_dt
         , last_updt_dt
@@ -83,6 +88,7 @@
             , #{atc_amt}
             , #{rl_dlvy_de}
             , #{dlvy_prearnge_de}
+            , #{comp_reqst_yn}
             , #{resp_pty}
             , NOW()
             , NOW()
@@ -113,6 +119,9 @@
             </if>
             <if test="dlvy_prearnge_de != null and dlvy_prearnge_de != ''">
                 dlvy_prearnge_de = #{dlvy_prearnge_de}
+            </if>
+            <if test="comp_reqst_yn != null and comp_reqst_yn != ''">
+                comp_reqst_yn = #{comp_reqst_yn}
             </if>
             <if test="resp_pty != null and resp_pty != ''">
                 resp_pty = #{resp_pty}
