@@ -5,65 +5,122 @@
 <mapper namespace="com.yj.tel.mapper.CompMapper">
 
     <select id="selectComp" resultType="java.util.HashMap" parameterType="java.util.Map">
-        /* 배상정보 조회 :: selectComp */
-        SELECT A.comp_id
-             , A.voc_id
-             , A.code
-             , B.code_nm
-             , B.comp_nm
-             , B.comp_dtl
-             , B.refer_1
-             , B.refer_2
-             , B.refer_3
-             , B.refer_4
-             , B.refer_5
-        FROM logistics_system.ls_Compensation A
-        LEFT OUTER JOIN logistics_system.ls_CompensationCode B
-                    ON A.code = B.code
+        /* 배상목록 조회 :: selectComp */
+        SELECT A.comp_info_id
+            , A.voc_id
+            , A.penality_id
+            , A.comp_id
+            , A.comp_content
+            , A.comp_doen_yn
+            , A.dispute_raised_yn
+            , A.first_regist_dt
+            , A.last_updt_dt
+            , B.*
+        FROM tp_Compensation A
+            LEFT OUTER JOIN (
+            SELECT aa.penality_id
+                , aa.voc_id
+                , aa.cust_co_id
+                , aa.driver_id
+                , dd.driver_nm
+                , dd.driver_mbtlnum
+                , aa.trsp_id
+                , cc.trsp_nm
+                , cc.trsp_mbtlnum
+                , aa.comp_id
+                , aa.penality_nm
+                , aa.penality_amt
+                , aa.driver_chk_yn
+                , aa.first_regist_dt
+                , bb.comp_nm
+                , bb.comp_dtl
+                , bb.comp_se
+                , bb.comp_amt
+                , bb.comp_atc
+                , bb.comp_rat
+                , bb.rm
+            FROM tp_Penality aa
+                LEFT OUTER JOIN tp_CompensationCode bb
+                    ON aa.comp_id = bb.comp_id
+                LEFT OUTER JOIN tp_Transporter cc
+                    ON aa.trsp_id = cc.trsp_id
+                LEFT OUTER JOIN tp_Driver dd
+                    ON aa.driver_id = dd.driver_id
+                    AND cc.trsp_id = dd.trsp_id
+            ) B
+        ON A.penality_id = B.penality_id
+        AND A.voc_id = B.voc_id
+        AND A.comp_id = B.comp_id
         <where>
             <if test="voc_id != null and voc_id != ''">
-                AND voc_id = #{voc_id}
+                AND A.voc_id = #{voc_id}
             </if>
             <if test="comp_id != null and comp_id != ''">
-                AND comp_id = #{comp_id}
+                AND A.comp_id = #{comp_id}
             </if>
-            <if test="code != null and code != ''">
-                AND code = #{code}
+            <if test="penality_id != null and penality_id != ''">
+                AND A.penality_id = #{penality_id}
             </if>
         </where>
     </select>
 
     <insert id="insertComp" parameterType="java.util.Map">
         /* 배상정보 등록 :: insertComp */
-        INSERT INTO logistics_system.ls_Compensation
+        INSERT INTO tp_Compensation
             (
-            voc_id
-            , code
+              voc_id
+            , penality_id
+            , comp_id
+            , comp_content
+            , comp_doen_yn
+            , dispute_raised_yn
+            , first_regist_dt
+            , last_updt_dt
             )
         VALUES
             (
              #{voc_id}
-            , #{code}
+            , #{penality_id}
+            , #{comp_id}
+            , #{comp_content}
+            , #{comp_doen_yn}
+            , #{dispute_raised_yn}
+            , NOW()
+            , NOW()
             )
     </insert>
 
     <update id="updateComp" parameterType="java.util.Map">
         /* 배상정보 수정 :: updateComp */
-        UPDATE logistics_system.ls_Compensation
+        UPDATE tp_Compensation
         <set>
-            <if test="code != null and code != ''">
-                code = #{code}
+            <if test="voc_id != null and voc_id != ''">
+                voc_id = #{voc_id}
             </if>
+            <if test="penality_id != null and penality_id != ''">
+                penality_id = #{penality_id}
+            </if>
+            <if test="comp_id != null and comp_id != ''">
+                comp_id = #{comp_id}
+            </if>
+            <if test="comp_content != null and comp_content != ''">
+                comp_content = #{comp_content}
+            </if>
+            <if test="comp_doen_yn != null and comp_doen_yn != ''">
+                comp_doen_yn = #{comp_doen_yn}
+            </if>
+            <if test="dispute_raised_yn != null and comp_doen_yn != ''">
+                comp_doen_yn = #{comp_doen_yn}
+            </if>
+            last_updt_dt = NOW()
         </set>
-        WHERE voc_id = #{voc_id}
-          AND comp_id = #{comp_id}
+        WHERE comp_info_id = #{comp_info_id}
     </update>
 
     <delete id="deleteComp" parameterType="java.util.Map">
         /* 배상정보 삭제 :: deleteComp */
-        DELETE FROM logistics_system.ls_Compensation
-        WHERE voc_id = #{voc_id}
-          AND comp_id = #{comp_id}
+        DELETE FROM tp_Compensation
+        WHERE comp_info_id = #{comp_info_id}
     </delete>
 
     <select id="selectCompCode" resultType="java.util.HashMap" parameterType="java.util.Map">
