@@ -6,85 +6,125 @@
 
     <select id="selectVoc" resultType="java.util.HashMap" parameterType="java.util.Map">
         /* VOC 조회 :: selectVoc */
-        SELECT voc_id
-             , content
-             , resp_pty
-             , comp_doen_yn
-             , dispute_raised_yn
-             , cust_co_id
-             , trsp_id
-        FROM logistics_system.ls_VOC
+        SELECT
+            A.voc_id
+          , A.trsp_id
+          , A.driver_id
+          , A.cust_co_id
+          , A.voc_content
+          , A.atc_amt
+          , A.rl_dlvy_de
+          , A.dlvy_prearnge_de
+          , A.resp_pty    /* 귀책당사 */
+          , A.first_regist_dt  as voc_regist_dt
+          , B.penality_id	/* 패널티_아이디 */
+          , B.cust_co_id  /* 고객사아이디  */
+          , B.trsp_id   /* 운송사 아이디  */
+          , B.driver_id  /* 배송기사아이디  */
+          , B.comp_id   /* 배상아이디  */
+          , B.penality_nm  /* 패널티_명  */
+          , B.penality_amt  /* 패널티_명 */
+          , B.driver_chk_yn  /* 기사_확인_여부 */
+          , B.first_regist_dt as penality_regist_dt
+          , C.comp_info_id /* 배상정보 아이디 */
+          , C.comp_content  /* 귀책내용 */
+          , C.dispute_raised_yn  /* 이의제기 여부  */
+          , C.comp_doen_yn   /* 배상_완료_여부  */
+          , C.first_regist_dt  as comp_info_regist_dt /* 최초_등록_일  */
+        FROM tp_VOC A
+            LEFT OUTER JOIN tp_Penality B
+                ON A.voc_id = B.voc_id
+                AND A.cust_co_id =B.cust_co_id
+                AND A.driver_id = B.driver_id
+                AND A.trsp_id  = B.trsp_id
+            LEFT OUTER JOIN tp_Compensation C
+                ON C.voc_id  = B.voc_id
+                AND C.penality_id  = B.penality_id
         <where>
             <if test="voc_id != null and voc_id != ''">
-                AND voc_id = #{voc_id}
+                AND A.voc_id = #{voc_id}
             </if>
             <if test="resp_pty != null and resp_pty != ''">
-                AND resp_pty = #{resp_pty}
+                AND A.resp_pty = #{resp_pty}
             </if>
             <if test="comp_doen_yn != null and comp_doen_yn != ''">
-                AND comp_doen_yn = #{comp_doen_yn}
+                AND C.comp_doen_yn = #{comp_doen_yn}
             </if>
             <if test="cust_co_id != null and cust_co_id != ''">
-                AND cust_co_id = #{cust_co_id}
+                AND B.cust_co_id = #{cust_co_id}
             </if>
             <if test="trsp_id != null and trsp_id != ''">
-                AND trsp_id = #{trsp_id}
+                AND B.trsp_id = #{trsp_id}
             </if>
         </where>
     </select>
 
     <insert id="insertVoc" parameterType="java.util.Map">
         /* VOC 등록 :: insertVoc */
-        INSERT INTO logistics_system.ls_VOC
-            (
-             content
-            , resp_pty
-            , comp_doen_yn
-            , dispute_raised_yn
-            , cust_co_id
-            , trsp_id
-            )
+        INSERT INTO tp_VOC
+        (
+          trsp_id
+        , driver_id
+        , cust_co_id
+        , voc_content
+        , atc_amt
+        , rl_dlvy_de
+        , dlvy_prearnge_de
+        , resp_pty
+        , first_regist_dt
+        , last_updt_dt
+        )
         VALUES
             (
-             #{content}
-            , #{resp_pty}
-            , #{comp_doen_yn}
-            , #{dispute_raised_yn}
+              #{trsp_id}
+            , #{driver_id}
             , #{cust_co_id}
-            , #{trsp_id}
+            , #{voc_content}
+            , #{atc_amt}
+            , #{rl_dlvy_de}
+            , #{dlvy_prearnge_de}
+            , #{resp_pty}
+            , NOW()
+            , NOW()
             )
     </insert>
 
     <update id="updateVoc" parameterType="java.util.Map">
         /* VOC 수정 :: updateVoc */
-        UPDATE logistics_system.ls_VOC
+        UPDATE ls_VOC
         <set>
-            <if test="content != null and content != ''">
-                content = #{content},
+            <if test="trsp_id != null and trsp_id != ''">
+                trsp_id = #{trsp_id},
             </if>
-            <if test="resp_pty != null and resp_pty != ''">
-                resp_pty = #{resp_pty},
-            </if>
-            <if test="comp_doen_yn != null and comp_doen_yn != ''">
-                comp_doen_yn = #{comp_doen_yn},
-            </if>
-            <if test="dispute_raised_yn != null and dispute_raised_yn != ''">
-                dispute_raised_yn = #{dispute_raised_yn},
+            <if test="driver_id != null and driver_id != ''">
+                driver_id = #{driver_id},
             </if>
             <if test="cust_co_id != null and cust_co_id != ''">
                 cust_co_id = #{cust_co_id},
             </if>
-            <if test="trsp_id != null and trsp_id != ''">
-                trsp_id = #{trsp_id}
+            <if test="voc_content != null and voc_content != ''">
+                voc_content = #{voc_content},
             </if>
+            <if test="atc_amt != null and atc_amt != ''">
+                atc_amt = #{atc_amt},
+            </if>
+            <if test="rl_dlvy_de != null and rl_dlvy_de != ''">
+                rl_dlvy_de = #{rl_dlvy_de}
+            </if>
+            <if test="dlvy_prearnge_de != null and dlvy_prearnge_de != ''">
+                dlvy_prearnge_de = #{dlvy_prearnge_de}
+            </if>
+            <if test="resp_pty != null and resp_pty != ''">
+                resp_pty = #{resp_pty}
+            </if>
+            last_updt_dt = NOW()
         </set>
         WHERE voc_id = #{voc_id}
-
     </update>
 
     <delete id="deleteVoc" parameterType="java.util.Map">
         /* VOC 삭제 :: deleteVoc */
-        DELETE FROM logistics_system.ls_VOC
+        DELETE FROM tp_VOC
         WHERE voc_id = #{voc_id}
     </delete>
 </mapper>

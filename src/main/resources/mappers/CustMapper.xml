@@ -9,7 +9,10 @@
         SELECT cust_co_id
              , cust_co_nm
              , other_info
-        FROM logistics_system.ls_Customer
+             , cust_mbtlnum
+             , first_regist_dt
+             , last_updt_dt
+        FROM tp_Customer
         <where>
             <if test="cust_co_id != null and cust_co_id != ''">
                 AND cust_co_id = #{cust_co_id}
@@ -17,40 +20,55 @@
             <if test="cust_co_nm != null and cust_co_nm != ''">
                 AND cust_co_nm = #{cust_co_nm}
             </if>
+            <if test="cust_mbtlnum != null and cust_mbtlnum != ''">
+                AND cust_mbtlnum LIKE CONCAT('%', #{cust_co_nm}, '%')
+            </if>
         </where>
     </select>
 
     <insert id="insertCust" parameterType="java.util.Map">
         /* 고객사 등록 :: insertCust */
-        INSERT INTO logistics_system.ls_Customer
+        INSERT INTO tp_Customer
             (
              cust_co_nm
              , other_info
+             , cust_mbtlnum
+             , use_yn
+             , first_regist_dt
+             , last_updt_dt
              )
         VALUES
             (
              #{cust_co_nm}
              , #{other_info}
+            , #{cust_mbtlnum}
+            , #{use_yn}
+            , NOW()
+            , NOW()
              )
     </insert>
 
     <update id="updateCust" parameterType="java.util.Map">
         /* 고객사 수정 :: updateCust */
-        UPDATE logistics_system.ls_Customer
+        UPDATE tp_Customer
         <set>
             <if test="cust_co_nm != null and cust_co_nm != ''">
                 cust_co_nm = #{cust_co_nm},
             </if>
             <if test="other_info != null and other_info != ''">
-                other_info = #{other_info}
+                other_info = #{other_info},
             </if>
+            <if test="cust_mbtlnum != null and cust_mbtlnum != ''">
+                cust_mbtlnum = #{cust_mbtlnum},
+            </if>
+            last_updt_dt = NOW()
         </set>
         WHERE cust_co_id = #{cust_co_id}
     </update>
 
     <delete id="deleteCust" parameterType="java.util.Map">
         /* 고객사 삭제 :: deleteCust */
-        DELETE FROM logistics_system.ls_Customer
+        DELETE FROM tp_Customer
         WHERE cust_co_id = #{cust_co_id}
     </delete>
 </mapper>
