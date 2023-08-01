@@ -46,7 +46,15 @@ public class PenalityController {
      * */
     @DeleteMapping("/penality")
     public ResponseEntity<String> deleteCust(@RequestBody Map<String, Object> param) {
-        penalityService.deletePenality(param); //
-        return new ResponseEntity<>("패널티 삭제 성공", HttpStatus.CREATED);
+        String penality_id = "";
+        penality_id = param.get("penality_id").toString();
+
+        try {
+            penalityService.deletePenality(param);
+            return ResponseEntity.ok("penality_id : " + penality_id + " 가 성공적으로 삭제되었습니다.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(e.getMessage());
+        }
     }
 }

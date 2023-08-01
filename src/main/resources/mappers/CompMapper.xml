@@ -107,22 +107,22 @@
         UPDATE tp_Compensation
         <set>
             <if test="voc_id != null and voc_id != ''">
-                voc_id = #{voc_id}
+                voc_id = #{voc_id},
             </if>
             <if test="penality_id != null and penality_id != ''">
-                penality_id = #{penality_id}
+                penality_id = #{penality_id},
             </if>
             <if test="comp_id != null and comp_id != ''">
-                comp_id = #{comp_id}
+                comp_id = #{comp_id},
             </if>
             <if test="comp_content != null and comp_content != ''">
-                comp_content = #{comp_content}
+                comp_content = #{comp_content},
             </if>
             <if test="comp_doen_yn != null and comp_doen_yn != ''">
-                comp_doen_yn = #{comp_doen_yn}
+                comp_doen_yn = #{comp_doen_yn},
             </if>
-            <if test="dispute_raised_yn != null and comp_doen_yn != ''">
-                comp_doen_yn = #{comp_doen_yn}
+            <if test="dispute_raised_yn != null and dispute_raised_yn != ''">
+                dispute_raised_yn = #{dispute_raised_yn},
             </if>
             last_updt_dt = NOW()
         </set>

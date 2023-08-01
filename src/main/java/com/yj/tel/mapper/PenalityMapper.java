@@ -15,4 +15,5 @@ public interface PenalityMapper {
     public void insertPenality(Map<String, Object> param);
     public void updatePenality(Map<String, Object> param);
     public void deletePenality(Map<String, Object> param);
+    public List<Map<String, Object>> checkPenalityUseAt(Map<String, Object> param);
 }

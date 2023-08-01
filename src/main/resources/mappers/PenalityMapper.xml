@@ -99,4 +99,11 @@
         DELETE FROM tp_Penality
         WHERE penality_id = #{penality_id}
     </delete>
+
+    <select id="checkPenalityUseAt" resultType="java.util.HashMap" parameterType="java.util.Map">
+        /* 패널티 사용여부 :: checkPenalityUseAt */
+        SELECT penality_id
+        FROM tp_Compensation
+        WHERE penality_id = #{penality_id}
+    </select>
 </mapper>
