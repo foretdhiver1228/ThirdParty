@@ -40,13 +40,4 @@ public class CustController {
         custService.updateCust(param); //
         return new ResponseEntity<>("고객사 수정 성공", HttpStatus.CREATED);
     }
-
-    /**
-     * 고객사 삭제
-     * */
-    @DeleteMapping("/cust")
-    public ResponseEntity<String> deleteCust(@RequestBody Map<String, Object> param) {
-        custService.deleteCust(param); //
-        return new ResponseEntity<>("고객사 삭제 성공", HttpStatus.CREATED);
-    }
 }

@@ -14,5 +14,4 @@ public interface TrspMapper {
     public List<Map<String, Object>> selectTrsp(Map<String, Object> param);
     public void insertTrsp(Map<String, Object> param);
     public void updateTrsp(Map<String, Object> param);
-    public void deleteTrsp(Map<String, Object> param);
 }

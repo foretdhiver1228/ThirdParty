@@ -36,12 +36,4 @@ public class TrspService {
 
         trspMapper.updateTrsp(param);
     }
-
-    /**
-     * 운송사 삭제
-     * */
-    public void deleteTrsp(Map<String, Object> param) {
-
-        trspMapper.deleteTrsp(param);
-    }
 }

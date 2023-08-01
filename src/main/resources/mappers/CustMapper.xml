@@ -10,6 +10,7 @@
              , cust_co_nm
              , other_info
              , cust_mbtlnum
+             , use_yn
              , first_regist_dt
              , last_updt_dt
         FROM tp_Customer
@@ -68,10 +69,4 @@
         </set>
         WHERE cust_co_id = #{cust_co_id}
     </update>
-
-    <delete id="deleteCust" parameterType="java.util.Map">
-        /* 고객사 삭제 :: deleteCust */
-        DELETE FROM tp_Customer
-        WHERE cust_co_id = #{cust_co_id}
-    </delete>
 </mapper>

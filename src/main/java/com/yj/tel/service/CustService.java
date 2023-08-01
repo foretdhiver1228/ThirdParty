@@ -36,12 +36,4 @@ public class CustService {
 
         custMapper.updateCust(param);
     }
-
-    /**
-     * 고객사 삭제
-     * */
-    public void deleteCust(Map<String, Object> param) {
-
-        custMapper.deleteCust(param);
-    }
 }

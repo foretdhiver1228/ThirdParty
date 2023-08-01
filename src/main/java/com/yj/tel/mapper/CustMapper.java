@@ -14,5 +14,4 @@ public interface CustMapper {
     public List<Map<String, Object>> selectCust(Map<String, Object> param);
     public void insertCust(Map<String, Object> param);
     public void updateCust(Map<String, Object> param);
-    public void deleteCust(Map<String, Object> param);
 }
