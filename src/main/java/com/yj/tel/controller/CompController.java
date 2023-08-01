@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class CompController {
      * */
     @PostMapping("/comp")
     public ResponseEntity<String> postComp(@RequestBody Map<String, Object> param) {
-        compService.insertComp(param); //
+        compService.insertComp(param);
         return new ResponseEntity<>("배상정보 등록 성공", HttpStatus.CREATED);
     }
 
@@ -37,7 +38,7 @@ public class CompController {
      * */
     @PutMapping("/comp")
     public ResponseEntity<String> putComp(@RequestBody Map<String, Object> param) {
-        compService.updateComp(param); //
+        compService.updateComp(param);
         return new ResponseEntity<>("배상정보 수정 성공", HttpStatus.CREATED);
     }
 
@@ -46,7 +47,7 @@ public class CompController {
      * */
     @DeleteMapping("/comp")
     public ResponseEntity<String> deleteComp(@RequestBody Map<String, Object> param) {
-        compService.deleteComp(param); //
+        compService.deleteComp(param);
         return new ResponseEntity<>("배상정보 삭제 성공", HttpStatus.CREATED);
     }
 
@@ -63,7 +64,7 @@ public class CompController {
      * */
     @PostMapping("/compcode")
     public ResponseEntity<String> postCompCode(@RequestBody Map<String, Object> param) {
-        compService.insertCompCode(param); //
+        compService.insertCompCode(param);
         return new ResponseEntity<>("배상정보코드 등록 성공", HttpStatus.CREATED);
     }
 
@@ -72,7 +73,7 @@ public class CompController {
      * */
     @PutMapping("/compcode")
     public ResponseEntity<String> putCompCode(@RequestBody Map<String, Object> param) {
-        compService.updateCompCode(param); //
+        compService.updateCompCode(param);
         return new ResponseEntity<>("배상정보코드 수정 성공", HttpStatus.CREATED);
     }
 
@@ -81,7 +82,15 @@ public class CompController {
      * */
     @DeleteMapping("/compcode")
     public ResponseEntity<String> deleteCompCode(@RequestBody Map<String, Object> param) {
-        compService.deleteCompCode(param); //
-        return new ResponseEntity<>("배상정보코드 삭제 성공", HttpStatus.CREATED);
+        String compId = "";
+        compId = param.get("comp_id").toString();
+
+        try {
+            compService.deleteCompCode(param);
+            return ResponseEntity.ok("compId : " + compId + " 가 성공적으로 삭제되었습니다.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(e.getMessage());
+        }
     }
 }

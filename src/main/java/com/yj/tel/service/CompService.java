@@ -50,7 +50,7 @@ public class CompService {
      * */
     public List<Map<String, Object>> selectCompCode(Map<String, Object> param) {
 
-        return compMapper.selectComp(param);
+        return compMapper.selectCompCode(param);
     }
 
     /**
@@ -58,7 +58,7 @@ public class CompService {
      * */
     public void insertCompCode(Map<String, Object> param) {
 
-        compMapper.insertComp(param);
+        compMapper.insertCompCode(param);
     }
 
     /**
@@ -66,14 +66,18 @@ public class CompService {
      * */
     public void updateCompCode(Map<String, Object> param) {
 
-        compMapper.updateComp(param);
+        compMapper.updateCompCode(param);
     }
 
     /**
      * 배상정보코드 삭제
      * */
     public void deleteCompCode(Map<String, Object> param) {
-
-        compMapper.deleteComp(param);
+        // comp_id 사용중인 데이터 개수가 0일 때만 삭제
+        if (compMapper.selectCompCodeUseAt(param).isEmpty()) {
+            compMapper.deleteCompCode(param);
+        } else {
+            throw new RuntimeException("사용중은 compId는 삭제 불가능합니다.");
+        }
     }
 }

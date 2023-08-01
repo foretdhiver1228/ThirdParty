@@ -23,6 +23,7 @@ public interface CompMapper {
     public void insertCompCode(Map<String, Object> param);
     public void updateCompCode(Map<String, Object> param);
     public void deleteCompCode(Map<String, Object> param);
+    public List<Map<String, Object>> selectCompCodeUseAt(Map<String, Object> param);
 
 
 }

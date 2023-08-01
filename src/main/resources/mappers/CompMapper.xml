@@ -164,7 +164,7 @@
         /* 배상정보코드 등록 :: insertCompCode */
         INSERT INTO tp_CompensationCode
             (
-            , comp_nm
+              comp_nm
             , comp_dtl
             , comp_se
             , comp_amt
@@ -219,4 +219,12 @@
         DELETE FROM tp_CompensationCode
         WHERE comp_id = #{comp_id}
     </delete>
+
+    <select id="selectCompCodeUseAt" resultType="java.util.HashMap" parameterType="java.util.Map">
+        /* 배상정보코드 사용여부 :: selectCompCodeUseAt */
+        SELECT comp_id
+        FROM tp_Penality
+        WHERE comp_id = #{comp_id}
+    </select>
+
 </mapper>

@@ -26,7 +26,7 @@ public class CustController {
     /**
      * 고객사 등록
      * */
-    @PostMapping("/comp")
+    @PostMapping("/cust")
     public ResponseEntity<String> postCust(@RequestBody Map<String, Object> param) {
         custService.insertCust(param); //
         return new ResponseEntity<>("고객사 등록 성공", HttpStatus.CREATED);
