@@ -36,12 +36,4 @@ public class DriverService {
 
         driverMapper.updateDriver(param);
     }
-
-    /**
-     * 배송기사 삭제
-     * */
-    public void deleteDriver(Map<String, Object> param) {
-
-        driverMapper.deleteDriver(param);
-    }
 }

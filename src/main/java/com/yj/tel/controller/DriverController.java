@@ -40,13 +40,4 @@ public class DriverController {
         driverService.updateDriver(param); //
         return new ResponseEntity<>("배송기사 수정 성공", HttpStatus.CREATED);
     }
-
-    /**
-     * 배송기사 삭제
-     * */
-    @DeleteMapping("/driver")
-    public ResponseEntity<String> deleteDriver(@RequestBody Map<String, Object> param) {
-        driverService.deleteDriver(param); //
-        return new ResponseEntity<>("배송기사 삭제 성공", HttpStatus.CREATED);
-    }
 }

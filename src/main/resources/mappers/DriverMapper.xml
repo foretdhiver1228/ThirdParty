@@ -10,6 +10,7 @@
              , trsp_id
              , driver_nm
              , driver_mbtlnum   /* 배송기사 연락처 */
+             , use_yn        /* 사용 여부 */
              , first_regist_dt
              , last_updt_dt
         FROM tp_Driver
@@ -62,14 +63,11 @@
             <if test="driver_mbtlnum != null and driver_mbtlnum != ''">
                 driver_mbtlnum = #{driver_mbtlnum},
             </if>
+            <if test="use_yn != null and use_yn != ''">
+                use_yn = #{use_yn},
+            </if>
             last_updt_dt = NOW()
         </set>
         WHERE driver_id = #{driver_id}
     </update>
-
-    <delete id="deleteDriver" parameterType="java.util.Map">
-        /* 배송기사 삭제 :: deleteDriver */
-        DELETE FROM tp_Driver
-        WHERE driver_id = #{driver_id}
-    </delete>
 </mapper>
