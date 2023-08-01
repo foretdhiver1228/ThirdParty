@@ -61,6 +61,9 @@
             <if test="cust_mbtlnum != null and cust_mbtlnum != ''">
                 cust_mbtlnum = #{cust_mbtlnum},
             </if>
+            <if test="use_yn != null and use_yn != ''">
+                use_yn = #{use_yn},
+            </if>
             last_updt_dt = NOW()
         </set>
         WHERE cust_co_id = #{cust_co_id}

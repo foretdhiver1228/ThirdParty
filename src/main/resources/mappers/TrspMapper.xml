@@ -9,7 +9,11 @@
         SELECT trsp_id
              , trsp_nm
              , other_info
-        FROM logistics_system.ls_Transporter
+             , trsp_mbtlnum   /* 담당자연락처 */
+             , use_yn
+             , first_regist_dt
+             , last_updt_dt
+        FROM tp_Transporter
         <where>
             <if test="trsp_id != null and trsp_id != ''">
                 AND trsp_id = #{trsp_id}
@@ -17,40 +21,58 @@
             <if test="trsp_nm != null and trsp_nm != ''">
                 AND trsp_nm = #{trsp_nm}
             </if>
+            <if test="trsp_mbtlnum != null and trsp_mbtlnum != ''">
+                AND trsp_mbtlnum LIKE CONCAT('%', #{trsp_mbtlnum})
+            </if>
         </where>
     </select>
 
     <insert id="insertTrsp" parameterType="java.util.Map">
         /* 운송사 등록 :: insertTrsp */
-        INSERT INTO logistics_system.ls_Transporter
+        INSERT INTO tp_Transporter
             (
              trsp_nm
              , other_info
+            , trsp_mbtlnum   /* 담당자연락처 */
+            , use_yn
+            , first_regist_dt
+            , last_updt_dt
              )
         VALUES
             (
              #{trsp_nm}
             , #{other_info}
+            , #{trsp_mbtlnum}
+            , #{use_yn}
+            , NOW()
+            , NOW()
              )
     </insert>
 
     <update id="updateTrsp" parameterType="java.util.Map">
         /* 운송사 수정 :: updateTrsp */
-        UPDATE logistics_system.ls_Transporter
+        UPDATE tp_Transporter
         <set>
             <if test="trsp_nm != null and trsp_nm != ''">
                 trsp_nm = #{trsp_nm},
             </if>
             <if test="other_info != null and other_info != ''">
-                other_info = #{other_info}
+                other_info = #{other_info},
             </if>
+            <if test="trsp_mbtlnum != null and trsp_mbtlnum != ''">
+                trsp_mbtlnum = #{trsp_mbtlnum},
+            </if>
+            <if test="use_yn != null and use_yn != ''">
+                use_yn = #{use_yn},
+            </if>
+            last_updt_dt = NOW()
         </set>
         WHERE trsp_id = #{trsp_id}
     </update>
 
     <delete id="deleteTrsp" parameterType="java.util.Map">
         /* 운송사 삭제 :: deleteTrsp */
-        DELETE FROM logistics_system.ls_Transporter
+        DELETE FROM tp_Transporter
         WHERE trsp_id = #{trsp_id}
     </delete>
 </mapper>
