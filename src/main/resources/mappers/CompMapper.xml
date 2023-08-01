@@ -29,7 +29,7 @@
                 , cc.trsp_mbtlnum
                 , aa.comp_id
                 , aa.penality_nm
-                , aa.penality_amt
+                , aa.penality_amt  /* 패널티 금액 = 배상 금액 */
                 , aa.driver_chk_yn
                 , aa.first_regist_dt
                 , bb.comp_nm
@@ -39,9 +39,21 @@
                 , bb.comp_atc
                 , bb.comp_rat
                 , bb.rm
+                , ee.voc_content
+                , ee.atc_amt
+                , ee.rl_dlvy_de
+                , ee.dlvy_prearnge_de
+                , ee.comp_reqst_yn
+                , ee.resp_pty
+                , ee.first_regist_dt  as voc_regist_dt
             FROM tp_Penality aa
                 LEFT OUTER JOIN tp_CompensationCode bb
                     ON aa.comp_id = bb.comp_id
+                LEFT OUTER JOIN tp_VOC ee
+                    ON aa.voc_id = ee.voc_id
+                   AND aa.cust_co_id = ee.cust_co_id
+                   AND aa.driver_id = ee.driver_id
+                   AND aa.trsp_id = ee.trsp_id
                 LEFT OUTER JOIN tp_Transporter cc
                     ON aa.trsp_id = cc.trsp_id
                 LEFT OUTER JOIN tp_Driver dd
