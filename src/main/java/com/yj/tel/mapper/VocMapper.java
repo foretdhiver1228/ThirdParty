@@ -12,4 +12,5 @@ public interface VocMapper {
     public void insertVoc(Map<String, Object> param);
     public void updateVoc(Map<String, Object> param);
     public void deleteVoc(Map<String, Object> param);
+    public List<Map<String, Object>> selectVocUseAt(Map<String, Object> param);
 }

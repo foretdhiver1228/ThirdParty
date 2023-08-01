@@ -136,4 +136,12 @@
         DELETE FROM tp_VOC
         WHERE voc_id = #{voc_id}
     </delete>
+
+
+    <select id="selectVocUseAt" resultType="java.util.HashMap" parameterType="java.util.Map">
+        /* VOC 사용여부 :: selectVocUseAt */
+        SELECT voc_id
+        FROM tp_Penality
+        WHERE voc_id = #{voc_id}
+    </select>
 </mapper>

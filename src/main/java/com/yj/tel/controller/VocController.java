@@ -47,7 +47,15 @@ public class VocController {
      * */
     @DeleteMapping("/voc")
     public ResponseEntity<String> deleteVoc(@RequestBody Map<String, Object> param) {
-        vocService.deleteVoc(param); //
-        return new ResponseEntity<>("VOC 삭제 성공", HttpStatus.CREATED);
+        String vocId = "";
+        vocId = param.get("voc_id").toString();
+
+        try {
+            vocService.deleteVoc(param); //
+            return ResponseEntity.ok("vocId : " + vocId + " 가 성공적으로 삭제되었습니다.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(e.getMessage());
+        }
     }
 }

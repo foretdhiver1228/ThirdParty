@@ -24,6 +24,7 @@ public class VocService {
      * VOC 등록
      * */
     public void insertVoc(Map<String, Object> param) {
+
         vocMapper.insertVoc(param);
     }
 
@@ -38,7 +39,12 @@ public class VocService {
      * VOC 삭제
      * */
     public void deleteVoc(Map<String, Object> param) {
-        vocMapper.deleteVoc(param);
+        // voc_id 사용중인 데이터 개수가 0일 때만 삭제
+        if (vocMapper.selectVocUseAt(param).isEmpty()) {
+            vocMapper.deleteVoc(param);
+        } else {
+            throw new RuntimeException("사용중인 vocId는 삭제 불가능합니다.");
+        }
     }
 
 }
