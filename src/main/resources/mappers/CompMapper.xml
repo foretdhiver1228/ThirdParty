@@ -68,89 +68,86 @@
 
     <select id="selectCompCode" resultType="java.util.HashMap" parameterType="java.util.Map">
         /* 배상정보코드 조회 :: selectCompCode */
-        SELECT code
-             , code_nm
+        SELECT comp_id
              , comp_nm
              , comp_dtl
-             , refer_1
-             , refer_2
-             , refer_3
-             , refer_4
-             , refer_5
-        FROM logistics_system.ls_CompensationCode
+             , comp_se
+             , comp_amt
+             , comp_rat
+             , rm
+             , first_regist_dt
+             , last_updt_dt
+        FROM tp_CompensationCode
         <where>
-            <if test="code != null and code != ''">
-                AND code = #{code}
+            <if test="comp_id != null and comp_id != ''">
+                AND comp_id = #{comp_id}
             </if>
             <if test="code_nm != null and code_nm != ''">
                 AND code_nm = #{code_nm}
             </if>
-            <if test="refer_1 != null and refer_1 != ''">
-                AND refer_1 = #{refer_1}
+            <if test="comp_se != null and comp_se != ''">
+                AND comp_se = #{comp_se}
             </if>
         </where>
     </select>
 
     <insert id="insertCompCode" parameterType="java.util.Map">
         /* 배상정보코드 등록 :: insertCompCode */
-        INSERT INTO logistics_system.ls_CompensationCode
-            (code_nm
+        INSERT INTO tp_CompensationCode
+            (
             , comp_nm
             , comp_dtl
-            , refer_1
-            , refer_2
-            , refer_3
-            , refer_4
-            , refer_5
+            , comp_se
+            , comp_amt
+            , comp_rat
+            , rm
+            , first_regist_dt
+            , last_updt_dt
             )
         VALUES
-            (#{code_nm}
-            , #{comp_nm}
+            (
+              #{comp_nm}
             , #{comp_dtl}
-            , #{refer_1}
-            , #{refer_2}
-            , #{refer_3}
-            , #{refer_4}
-            , #{refer_5}
+            , #{comp_se}
+            , #{comp_amt}
+            , #{comp_rat}
+            , #{rm}
+            , NOW()
+            , NOW()
             )
     </insert>
 
 
     <update id="updateCompCode" parameterType="java.util.Map">
         /* 배상정보코드 수정 :: updateCompCode */
-        UPDATE logistics_system.ls_CompensationCode
+        UPDATE tp_CompensationCode
         <set>
-            <if test="code_nm != null and code_nm != ''">
-                code_nm = #{code_nm},
-            </if>
             <if test="comp_nm != null and comp_nm != ''">
                 comp_nm = #{comp_nm},
             </if>
             <if test="comp_dtl != null and comp_dtl != ''">
                 comp_dtl = #{comp_dtl},
             </if>
-            <if test="refer_1 != null and refer_1 != ''">
-                refer_1 = #{refer_1},
+            <if test="comp_se != null and comp_se != ''">
+                comp_se = #{comp_se},
             </if>
-            <if test="refer_2 != null and refer_2 != ''">
-                refer_2 = #{refer_2},
+            <if test="comp_amt != null and comp_amt != ''">
+                comp_amt = #{comp_amt},
             </if>
-            <if test="refer_3 != null and refer_3 != ''">
-                refer_3 = #{refer_3},
+            <if test="comp_rat != null and comp_rat != ''">
+                comp_rat = #{comp_rat},
             </if>
-            <if test="refer_4 != null and refer_4 != ''">
-                refer_4 = #{refer_4},
+            <if test="rm != null and rm != ''">
+                rm = #{rm},
             </if>
-            <if test="refer_5 != null and refer_5 != ''">
-                refer_5 = #{refer_5}
-            </if>
+            last_updt_dt = NOW()
         </set>
-        WHERE code = #{code}
+        WHERE comp_id = #{comp_id}
     </update>
 
     <delete id="deleteCompCode" parameterType="java.util.Map">
         /* 배상정보코드 삭제 :: deleteCompCode */
-        DELETE FROM logistics_system.ls_CompensationCode
-        WHERE code = #{code}
+        DELETE FROM tp_CompensationCode
+        WHERE comp_id = #{comp_id}
     </delete>
 </mapper>

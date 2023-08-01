@@ -9,7 +9,7 @@ import java.util.Map;
 public interface CompMapper {
 
     /**
-     * ls_Compensation :: 배상정보 테이블 CRUD
+     * tp_Compensation :: 배상정보 테이블 CRUD
      * */
     public List<Map<String, Object>> selectComp(Map<String, Object> param);
     public void insertComp(Map<String, Object> param);
@@ -17,7 +17,7 @@ public interface CompMapper {
     public void deleteComp(Map<String, Object> param);
 
     /**
-     * ls_CompensationCode :: 배상정보코드 테이블 CRUD
+     * tp_CompensationCode :: 배상정보코드 테이블 CRUD
      * */
     public List<Map<String, Object>> selectCompCode(Map<String, Object> param);
     public void insertCompCode(Map<String, Object> param);
