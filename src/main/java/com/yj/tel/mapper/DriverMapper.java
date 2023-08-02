@@ -14,5 +14,5 @@ public interface DriverMapper {
     public List<Map<String, Object>> selectDriver(Map<String, Object> param);
     public void insertDriver(Map<String, Object> param);
     public void updateDriver(Map<String, Object> param);
-    public void deleteDriver(Map<String, Object> param);
+    public List<Map<String, Object>> selectDriverPenality(Map<String, Object> param);
 }

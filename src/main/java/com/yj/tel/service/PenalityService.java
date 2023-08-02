@@ -4,6 +4,7 @@ import com.yj.tel.mapper.CompMapper;
 import com.yj.tel.mapper.PenalityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -36,12 +37,24 @@ public class PenalityService {
     /**
      * 패널티 수정
      * */
+    @Transactional
     public void updatePenality(Map<String, Object> param) {
-        if (param.get("driver_chk_yn").toString() == "Y") {
-            penalityMapper.updatePenality(param);  // 1. 기사_확인_여부 Y 업데이트
-            compMapper.insertComp(param);         // 2. 배상정보 insert
-        } else {
-            penalityMapper.updatePenality(param);
+        String chkYn = (String) param.get("driver_chk_yn");
+        // 기사확인 Push 알림 전송후 에 대한 처리
+        try {
+            if ("Y".equals(chkYn)) { // 기사확인 Y
+                penalityMapper.updatePenality(param);  // 1. 기사_확인_여부 Y 업데이트
+
+                // 이의제기 여부 N 일시 베상 완료 처리.
+                param.put("dispute_raised_yn", "N");
+                // 이의제기 여부 Y 일시 패널티 다시 생성.
+
+                compMapper.insertComp(param);         // 2. 배상정보 insert
+            } else {
+                penalityMapper.updatePenality(param);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("패널티 기사확인 수정 중 오류 발생", e);
         }
     }
 

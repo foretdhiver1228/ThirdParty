@@ -70,4 +70,46 @@
         </set>
         WHERE driver_id = #{driver_id}
     </update>
+
+    <select id="selectDriverPenality" resultType="java.util.HashMap" parameterType="java.util.Map">
+        /* 선택기간 배송기사패널티 조회 :: selectDriverPenality */
+        SELECT A.driver_id
+        , A.trsp_id
+        , B.trsp_nm
+        , A.driver_nm
+        , A.driver_mbtlnum   /* 배송기사 연락처 */
+        , SUM(C.penality_amt) as tot_penalty_amt  /* 선택 기간동안 총 배상(=패널티)금액 */
+        FROM tp_Driver A
+        LEFT OUTER JOIN tp_Transporter B
+                    ON A.trsp_id = B.trsp_id
+        LEFT OUTER JOIN (
+                        SELECT aa.penality_id
+                            , aa.voc_id
+                            , aa.driver_id
+                            , aa.cust_co_id
+                            , bb.cust_co_nm
+                            , aa.comp_id
+                            , aa.penality_nm
+                            , aa.penality_amt
+                        FROM tp_Penality aa
+                        LEFT OUTER JOIN tp_Customer bb
+                                    ON aa.cust_co_id = bb.cust_co_id
+                        LEFT OUTER JOIN tp_Compensation cc
+                                    ON aa.penality_id = cc.penality_id
+                                    AND aa.voc_id = cc.voc_id
+                        <where>
+                            aa.driver_chk_yn = 'Y'
+                            <if test="startDt != null and startDt != '' and endDt != null and endDt != ''">
+                               AND cc.first_regist_dt  BETWEEN #{startDt} AND #{endDt}
+                            </if>
+                        </where>
+                    )C
+                    ON C.driver_id = A.driver_id
+        <where>
+            <if test="driver_id != null and driver_id != ''">
+                AND A.driver_id = #{driver_id}
+            </if>
+        </where>
+        GROUP BY A.driver_id
+    </select>
 </mapper>

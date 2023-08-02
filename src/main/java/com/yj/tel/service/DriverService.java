@@ -36,4 +36,12 @@ public class DriverService {
 
         driverMapper.updateDriver(param);
     }
+
+    /**
+     * 배송기사의 패널티 내역 조회
+     * */
+    public List<Map<String, Object>> selectDriverPenality(Map<String, Object> param) {
+
+        return driverMapper.selectDriverPenality(param);
+    }
 }

@@ -40,4 +40,12 @@ public class DriverController {
         driverService.updateDriver(param); //
         return new ResponseEntity<>("배송기사 수정 성공", HttpStatus.CREATED);
     }
+
+    /**
+     * 배송기사패널티 조회
+     * */
+    @GetMapping("/driverpenality")
+    public List<Map<String, Object>> selectDriverPenality(@RequestParam Map<String, Object> param) {
+        return driverService.selectDriverPenality(param);
+    }
 }
