@@ -144,4 +144,8 @@
         FROM tp_Penality
         WHERE voc_id = #{voc_id}
     </select>
+
+    <select id="getLastInsertedId" resultType="java.lang.Long">
+        SELECT LAST_INSERT_ID()
+    </select>
 </mapper>
